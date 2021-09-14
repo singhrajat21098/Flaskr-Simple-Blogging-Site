@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<title>
+    {% block title %}{% endblock %} - Flaskr
+    
+</title>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+<nav class="navbar border-bottom my-3">
+
+    <h1 class="navbar-brand text-decoration-none fw-bold mx-3">Flaskr</h1>
+    {% block navbar_menu %}{% endblock %}
+    <ul class="nav nav-pills d-flex justify-content-end">
+        {% if g.user %}
+        <li class="nav-item"><span class="mx-3 navbar-brand">{{ g.user['username'] }}</span></li>
+        <li class="nav-item"><a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary mx-3">Log Out</a></li>
+        {% else %}
+        <li class="nav-item"><a href="{{ url_for('auth.register') }}" class="btn btn-primary px-3 mx-3">Register</a></li>
+        <li class="nav-item"><a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary px-3 mx-3">Log In</a></li>
+        {% endif %}
+
+        
+    </ul>
+</nav>
+<section>
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</section>
